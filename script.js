@@ -5,6 +5,11 @@ const headerImg = document.querySelector(".header-img");
 const btnLeft = document.querySelector(".btn-left");
 const btnRight = document.querySelector(".btn-right");
 const slides = document.querySelectorAll(".slide");
+const dotsContainer = document.querySelector(".dots");
+
+// **************************************/
+// --------------DARK MODE--------------
+//***************************************/
 
 const darkMode = function (e) {
   if (e.target.checked) {
@@ -19,41 +24,72 @@ const darkMode = function (e) {
 };
 switchBtn.addEventListener("change", darkMode);
 
-// CAROUSEL
+// **************************************/
+// ----------------SLIDER----------------
+//***************************************/
 
-let currentSlide = 1;
-//adding transform to slides
+let currentSlide = 0;
+
+// SLIDER CREATION
+//Adding transform to slides to get them in the initial position
 const displaySlides = function () {
   slides.forEach((slide, i) => {
     slide.setAttribute("style", `transform: translateX(${101 * i}%)`);
   });
 };
-// 0 , 100% , 200%
 displaySlides();
+// Slides initial postion 0 , 100% , 200%
+
+// Creating the dots
+const createDots = function () {
+  slides.forEach((_, i) =>
+    dotsContainer.insertAdjacentHTML(
+      "beforeend",
+      `<button class="dots-dot" data-slide=${i}></button>`
+    )
+  );
+};
+createDots();
+
+//SLIDER FUNCTIONALITY
+// takes a slide number and switches to it
+const goToSlide = function (slideNumber) {
+  slides.forEach((slide, i) => {
+    slide.style.transform = `translateX(${101 * i - slideNumber * 101}%)`;
+  });
+  activateDot(slideNumber);
+};
+
+// activates the current slide dot
+const activateDot = function (slideNumber) {
+  document
+    .querySelectorAll(".dots-dot")
+    .forEach((dot) => dot.classList.remove("dots-dot-active"));
+  document
+    .querySelector(`.dots-dot[data-slide='${slideNumber}']`)
+    .classList.add("dots-dot-active");
+};
+activateDot(0);
 
 function nextSlide() {
   // Check current slide if it's the last
-  if (currentSlide === slides.length) currentSlide = 0; // this will restart the slider to the first slide by making the transforms 0,200,100
-  // cur slide = 1 -> 0,100,200 -> -100, 0, 100
-  slides.forEach((slide, i) => {
-    slide.style.transform = `translateX(${101 * i - currentSlide * 101}%)`;
-  });
-  currentSlide++;
+  if (currentSlide === slides.length - 1) currentSlide = 0;
+  else currentSlide++;
+  goToSlide(currentSlide);
 }
 // after first click 0 -> A(-100) , 100 -> B(0) , 200 -> C(100)
 
 function previousSlide() {
-  // cur slide = 2
-  if (currentSlide === 1) currentSlide = slides.length + 1; // this will restart the slider to the end slide by making the transforms -200,-100,0
-  currentSlide--; // cur slide = 1
-
-  slides.forEach((slide, i) => {
-    slide.style.transform = `translateX(${
-      101 * (i + 1) - currentSlide * 101
-    }%)`; // 0
-  });
+  if (currentSlide === 0) currentSlide = slides.length - 1;
+  else currentSlide--;
+  goToSlide(currentSlide);
 }
-// after first (after the first Slide click) click -100 -> A(0) , 0 -> B(100) , 100 -> C(200)
+// after first click (after the first Slide ) click -100 -> A(0) , 0 -> B(100) , 100 -> C(200)
 
 btnRight.addEventListener("click", nextSlide);
 btnLeft.addEventListener("click", previousSlide);
+dotsContainer.addEventListener("click", function (e) {
+  const target = e.target;
+  if (!target.classList.contains("dots-dot")) return;
+  goToSlide(target.dataset.slide);
+});
