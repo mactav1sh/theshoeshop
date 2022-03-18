@@ -12,7 +12,7 @@
   --fw-regt: 400;
   --brd-rd-lrg: 3rem;
   --brd-rd-med: 2rem;
-  --fs-h2: 4rem;
+  --fs-h2: 4.5rem;
   --shadow-lrg: 0 0 10px 0 rgba(0, 0, 0, 0.3);
 }
 
@@ -44,6 +44,13 @@ body {
   font-family: inherit;
   cursor: pointer;
   border: none;
+}
+.section-headline {
+  padding-top: 8rem;
+  font-size: var(--fs-h2);
+  text-transform: uppercase;
+  text-decoration: underline 7px var(--secondary-clr);
+  text-underline-offset: 3px;
 }
 
 /* HERO SECTION */
@@ -132,24 +139,10 @@ body {
   border-radius: 50%;
 }
 
-/* 
-
-/* ******************************************/
-/* BEST SELLERS SECTION */
-.best-section {
-  margin-top: 9.6rem;
-  min-height: 100vh;
-  min-width: 100vw;
-  /* background-color: cadetblue; */
-}
-
-/******************************************/
-/* NAVIGATION */
-nav {
-  position: fixed;
-}
-
+/***************************************/
 /* LIGHT-DARK SWITCH */
+/***************************************/
+
 .switch-container {
   position: fixed;
   top: 2rem;
@@ -195,20 +188,17 @@ nav {
   transform: translateX(2rem);
 }
 
-/* CAROUSEL SECTION */
+/***************************************/
+/* SLIDER SECTION */
+/***************************************/
+.slider-headline {
+  margin: 0 0 6rem 4rem;
+}
 .arrivals-section {
   min-height: 100vh;
   width: 100vw;
   background-color: var(--primary-clr-alt);
-}
-
-.carousel-headline {
-  padding-top: 2rem;
-  margin: 0 0 6rem 5rem;
-  font-size: var(--fs-h2);
-  text-transform: uppercase;
-  text-decoration: underline 7px var(--secondary-clr);
-  text-underline-offset: 3px;
+  padding-bottom: 9.6rem;
 }
 
 .slider {
@@ -238,17 +228,6 @@ nav {
   position: absolute;
   object-fit: cover;
 }
-/* To add overlay effect */
-/* .slide::after {
-  content: "";
-  width: 100%;
-  height: 20%;
-  background-image: linear-gradient(to top, red, rgb(0, 0, 0, 0.005));
-  z-index: 10;
-  border-radius: 2rem;
-  position: absolute;
-  bottom: 0;
-} */
 
 /* buttons */
 .btn-slider {
@@ -297,3 +276,113 @@ nav {
 .dots-dot-active {
   background-color: #fff;
 }
+
+/***************************************/
+/* BEST SELLERS SECTION */
+/***************************************/
+
+.best-headline {
+  padding-top: 6rem;
+  margin-bottom: 4rem;
+  text-align: center;
+}
+.best-section {
+  border-top: 1px solid var(--secondary-clr-tint);
+  min-height: 100vh;
+  min-width: 100vw;
+  background-color: var(--primary-clr-alt);
+}
+
+.gallery {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6rem;
+}
+.gallery-item {
+  position: relative;
+  height: 70vh;
+  width: 25vw;
+}
+/* vertical line */
+.gallery-item::after {
+  content: "";
+  position: absolute;
+  height: 0;
+  /* height: 80%; */
+  width: 0.2rem;
+  background-color: var(--f-clr);
+  top: 5%;
+  right: 12%;
+  transition: height 0.6s;
+  z-index: 10;
+}
+/* horizontal line */
+.gallery-item::before {
+  content: "";
+  position: absolute;
+  width: 0;
+  /* width: 85%; */
+  height: 0.2rem;
+  background-color: var(--f-clr);
+  top: 12%;
+  right: 5%;
+  transition: width 0.6s;
+  z-index: 10;
+}
+
+.gallery-img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  box-shadow: 0.4rem 0.4rem 0.1rem var(--secondary-clr),
+    0.8rem 0.8rem 0.1rem var(--secondary-clr-tint);
+  border-radius: 3rem;
+  transition: all 0.5s;
+}
+.gallery-title {
+  position: absolute;
+  top: 2rem;
+  left: 4rem;
+  color: var(--f-clr);
+  text-transform: uppercase;
+  font-size: 2rem;
+  opacity: 0;
+  transition: all 0.5s;
+}
+.gallery-description {
+  position: absolute;
+  width: 80%;
+  bottom: 50%;
+  left: 4rem;
+  color: var(--f-clr);
+  text-transform: uppercase;
+  font-size: 1.8rem;
+  opacity: 0;
+  transition: opacity 0.5s;
+}
+/* HOVER EFFECT FOR GALLERY */
+
+/* Showing lines */
+.gallery-item:hover::after {
+  height: 80%;
+}
+.gallery-item:hover::before {
+  width: 85%;
+}
+
+.gallery-item:hover .gallery-description {
+  opacity: 100;
+}
+.gallery-item:hover .gallery-title {
+  opacity: 100%;
+}
+.gallery-item:hover .gallery-img {
+  filter: blur(0.5rem);
+  opacity: 30%;
+  box-shadow: 1rem 1rem 0.1rem var(--secondary-clr),
+    2rem 2rem 0.1rem var(--secondary-clr-tint);
+}
+
+/***************************************/
+/***************************************/
